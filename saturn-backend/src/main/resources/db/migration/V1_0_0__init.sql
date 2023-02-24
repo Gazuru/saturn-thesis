@@ -1,0 +1,1 @@
+ALTER schema public RENAME TO saturn;
