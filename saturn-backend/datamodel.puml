@@ -1,0 +1,75 @@
+@startuml
+'https://plantuml.com/object-diagram
+
+object Role {
+    role: RoleType
+}
+
+Role --> RoleType
+
+enum RoleType {
+    STUDENT
+    LECTURER
+    ADMINISTRATOR
+}
+
+object Subject {
+    name: string
+    courses: List<Course>
+    responsibleUsers: List<User>
+}
+
+Subject o-l- User : responsibleUsers
+Subject o-- Course : courses
+
+object Course {
+    name: string
+    courseType: CourseType
+    teachers: List<Teacher>
+    students: List<Student>
+    classes: List<Class>
+}
+
+Course o-- Class : classes
+Course o-- User : students
+Course o-- User : teachers
+
+object Class {
+    dayOfTheWeek: Integer
+    startTime: DateTime
+    lengthInMinutes: Integer
+}
+
+Course --> CourseType
+
+enum CourseType {
+    LECTURE
+    PRACTICE
+    LABORATORY
+    EXAM
+}
+
+object User {
+    role: Role
+    firstName: string
+    lastName: string
+    dateOfBirth: Date
+}
+
+User *-l- Role
+
+object Student {
+    user: User
+    courses: List<Course>
+    classes: List<Class>
+}
+
+object Teacher {
+    user: User
+}
+
+Student o-- Course: courses
+Student o-- Class : classes
+Student o-- User
+
+@enduml
