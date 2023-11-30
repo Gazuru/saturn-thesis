@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/saturn
+    username: saturn
+    password: saturn
+  devtools:
+    restart:
+      additional-paths:
+        - src/main/java/
+server:
+  servlet:
+    context-path: "/api"
+  port: 8100

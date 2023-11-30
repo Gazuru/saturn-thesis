@@ -1,0 +1,67 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'base'
+    id 'org.openapi.generator' version '7.0.1' apply false
+    id 'org.springframework.boot' version '3.1.5' apply false
+}
+
+repositories {
+    mavenCentral()
+}
+
+wrapper {
+    gradleVersion = '8.4'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
+}
+
+subprojects {
+    pluginManager.withPlugin('java') {
+        apply plugin: 'io.spring.dependency-management'
+
+        dependencyManagement {
+            imports {
+                mavenBom SpringBootPlugin.BOM_COORDINATES
+            }
+            dependencies {
+                dependency 'org.mapstruct:mapstruct:1.5.5.Final'
+                dependency 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+                dependency 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+            }
+        }
+
+        repositories {
+            mavenCentral()
+        }
+
+        tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+    }
+
+    pluginManager.withPlugin('org.openapi.generator') {
+        sourceSets {
+            main {
+                java {
+                    srcDir layout.buildDirectory.dir('generate-resources/main/src/main/java')
+                }
+            }
+        }
+        tasks.named('compileJava') {
+            dependsOn 'openApiGenerate'
+        }
+    }
+
+    pluginManager.withPlugin('org.springframework.boot') {
+        dependencies {
+            testImplementation 'org.springframework.boot:spring-boot-starter-test'
+            testImplementation 'org.springframework:spring-web'
+        }
+
+        springBoot {
+            buildInfo {
+                // To make compileJava up to date
+                // https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#integrating-with-actuator.build-info
+                excludes = ['time']
+            }
+        }
+    }
+}

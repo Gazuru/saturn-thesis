@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  title: Saturn
+  description: This is the API description of the 'education' module of the Saturn educational portal.
+  version: 0.0.1
+servers:
+  - url: http://localhost:8100/api
+    description: Local environment
+paths:
+  /v1/test:
+    get:
+      tags:
+        - Dummy
+      operationId: getTest
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: string

@@ -1,3 +1,10 @@
-rootProject.name = 'saturn'
+rootProject.name = 'Saturn'
 
-include 'saturn-backend'
+include 'saturn-education:saturn-education-api'
+include 'saturn-education:saturn-education-application'
+include 'saturn-education:saturn-education-persistence'
+include 'saturn-education:saturn-education-service'
+include 'saturn-education:saturn-education-web'
+include 'saturn-management'
+include 'saturn-portal:saturn-portal-backend'
+include 'saturn-portal:saturn-portal-frontend'
