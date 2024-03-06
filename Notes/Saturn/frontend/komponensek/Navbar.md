@@ -1,0 +1,12 @@
+## Menüpontok
+---
+- Logo 
+- [[Főoldal]]/[[Főoldal|Dashboard]] 
+- Tárgyaim kezelése _oktató only_
+- Tárgyfelvétel _hallgató only_
+- Vizsgafelvétel _hallgató only_ (ld.: [[időszakok]])
+- Órarend _oktató + hallgató only_ 
+- Ügyintézés : mindenkinek, ügyintézőknek külön funkcionalitás
+	- Kérvények
+	- Tartozások
+- Jobb sarokban Felhasználói preferenciák ikon (Profil kör)

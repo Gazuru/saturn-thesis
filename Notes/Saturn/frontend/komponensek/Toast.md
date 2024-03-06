@@ -1,0 +1,1 @@
+Generikus információs toast, konfigurálható üzenettel, severity levellel -> severity level alapján más ikon megjelenítése
