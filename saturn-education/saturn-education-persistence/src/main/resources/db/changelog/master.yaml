@@ -1,0 +1,4 @@
+databaseChangeLog: []
+#  - include:
+#      file: updates/v1_0_0/changelog-v1_0_0.yaml
+#      relativeToChangelogFile: true

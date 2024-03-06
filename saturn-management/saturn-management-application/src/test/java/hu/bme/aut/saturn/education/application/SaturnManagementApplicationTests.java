@@ -1,10 +1,10 @@
-package hu.bme.aut.saturn.education.application;
+package hu.bme.aut.saturn.management.application;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SaturnApplicationTests {
+class SaturnManagementApplicationTests {
 
 	@Test
 	void contextLoads() {

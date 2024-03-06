@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 'v1_0_0_1'
+      author: JM9H5H
+      dbms: 'postgresql'
+      changes:
+        - sqlFile:
+            path: alter_default_schema.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: alter_default_schema_rollback.sql
+            relativeToChangelogFile: true

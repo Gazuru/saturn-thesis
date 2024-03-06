@@ -1,0 +1,29 @@
+plugins {
+	id 'java-library'
+}
+
+group = 'hu.bme.aut'
+version = '0.0.1'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	api project(':saturn-management:saturn-management-api')
+	implementation project(':saturn-management:saturn-management-persistence')
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+//	implementation 'org.mapstruct:mapstruct'
+	compileOnly 'org.springframework.boot:spring-boot-devtools'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+//	annotationProcessor 'org.mapstruct:mapstruct-processor'
+//	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+}

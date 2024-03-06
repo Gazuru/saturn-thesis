@@ -1,0 +1,63 @@
+SATURN
+	felhasználók kezelésére service
+		auth, user lekérdezés külön? (valszeg igen)
+			-> authService, userService
+		=> authService külön common modulban (pl backend-auth)
+		=> userService saturn-edu, saturn-management része
+			-> mindkettő használja, külön/common module?
+			
+	saturn-edu
+		egy külön modul a tárgyadatok, kurzusadatok tárolására, lekérdezésére külön db?
+		több külön service, amik aggregálják az adatot?
+		egy nagy/több kisebb controller, robosztus API
+		mappelés entity <-> dto között mehet
+		
+		-> packagek: 
+			application -> összesített konfiguráció, spring boot application ami fut, mint microservice
+			api -> openapi generált api controller interfacek, dto osztályok
+			persistence -> entity osztályok, repositoryk
+			service -> mapping implementációk, üzleti logika a lekérdezésekre
+			web -> api controller interfacek implementációja
+			
+			dependencyk:
+			web -> api, service
+			service -> api, persistence
+	
+	saturn-management
+		külön modul a menedzsment adatok, feladatok kezelésére, külön db?
+		
+		-> packagek: ua. mint saturn-edu
+		
+	backendenként külön openapi.yaml/json file -> legkívül
+		generált spring dtok, controller interfacek, angular dtok, service/clientek
+		
+	ha azure deployment 
+		-> először poc feltöltés app servicebe
+		utána csere terraform configra, key-vault/storage account, stb bevezetése
+		dockerfileok minden microservicenek
+		ci/cd investigation (github actions/local megoldás)
+		
+	sonarqube integráció?
+	
+	integration tesztek minden controllerre/apira
+	
+	unit testek a business logicra
+	
+	component testek, cypress testek(?) a FE-re T_T
+	
+		
+	saturn-portal (FE modul)
+			saturn-portal-frontend -> angular alkalmazás w routing, etc
+			saturn-portal-backend -> külön modul a felhasználói beállítások tárolására? (lehet overkill)
+				-> lehetőség i18n használatára
+				-> dark/light mode?
+				
+structure:
+	saturn
+		saturn-edu
+		saturn-management
+		saturn-portal
+			saturn-portal-backend (?)
+			saturn-portal-frontend
+		shared (common utilities)
+			backend-auth (prob used in edu, mgmt, portal-backend modules)

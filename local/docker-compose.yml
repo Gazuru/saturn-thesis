@@ -1,12 +1,27 @@
 version: '3.8'
 services:
-  db:
-    image: saturn-postgres
+  db-education:
+    build: postgresql/.
     restart: always
     ports:
       - '5432:5432'
+    environment:
+      - POSTGRES_DB=saturn_education
     volumes:
-      - db:/var/lib/postgresql/data
+      - db-education:/var/lib/postgresql/data
+      - ./init_edu.sql:/docker-entrypoint-initdb.d/init_edu.sql
+  db-management:
+    build: postgresql/.
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_DB=saturn_management
+    volumes:
+      - db-management:/var/lib/postgresql/data
+      - ./init_mgmt.sql:/docker-entrypoint-initdb.d/init_mgmt.sql
 volumes:
-  db:
+  db-education:
+    driver: local
+  db-management:
     driver: local

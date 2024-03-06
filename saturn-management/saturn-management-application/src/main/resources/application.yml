@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/saturn_education
+    url: jdbc:postgresql://localhost:5433/saturn_management
     username: saturn
     password: saturn
     driver-class-name: org.postgresql.Driver
@@ -12,11 +12,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: saturn_education
+        default_schema: saturn_management
   liquibase:
     change-log: classpath:db/changelog/master.yaml
-    default-schema: saturn_education
+    default-schema: saturn_management
 server:
   servlet:
     context-path: "/api"
-  port: 8100
+  port: 8200

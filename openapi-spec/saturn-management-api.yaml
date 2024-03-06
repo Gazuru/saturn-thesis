@@ -1,0 +1,9 @@
+openapi: 3.0.3
+info:
+  title: Saturn
+  description: This is the API description of the 'management' module of the Saturn educational portal.
+  version: 0.0.1
+servers:
+  - url: http://localhost:8200/api
+    description: Local environment
+paths: {}

@@ -24,6 +24,7 @@ subprojects {
                 mavenBom SpringBootPlugin.BOM_COORDINATES
             }
             dependencies {
+                dependency 'org.liquibase:liquibase-core:4.25.0'
                 dependency 'org.mapstruct:mapstruct:1.5.5.Final'
                 dependency 'org.mapstruct:mapstruct-processor:1.5.5.Final'
                 dependency 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
