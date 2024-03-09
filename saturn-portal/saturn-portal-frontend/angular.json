@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "saturn-portal-frontend:build:production"
+              "buildTarget": "saturn-portal-frontend:build:production"
             },
             "development": {
-              "browserTarget": "saturn-portal-frontend:build:development"
+              "buildTarget": "saturn-portal-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "saturn-portal-frontend:build"
+            "buildTarget": "saturn-portal-frontend:build"
           }
         },
         "test": {
