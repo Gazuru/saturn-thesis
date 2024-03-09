@@ -1,2 +1,7 @@
-<button (click)="onClick()"></button>
-<h1>{{user?.name}}</h1>
+<div>
+  <h1>Observer</h1>
+  <p *ngIf="user$ | async as user">{{user.name}}</p>
+  <h1>Subscriber</h1>
+  <button (click)="onClick()">Teszt</button>
+  <p *ngIf="user">{{user.name}}</p>
+</div>

@@ -6,9 +6,11 @@ import hu.bme.aut.saturn.education.web.v1.DummyApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Controller
 @RequiredArgsConstructor
+@CrossOrigin
 public class DummyController implements DummyApi {
 
     private final DummyService dummyService;
