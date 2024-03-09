@@ -20,16 +20,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authorizeHttpRequests(requests -> requests
+                        .anyRequest().permitAll())
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
                 .formLogin(Customizer.withDefaults());
 
         return http.build();
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         UserDetails user1 = User.withUsername("user1")
                 .password(passwordEncoder().encode("password"))
                 .roles("USER")
