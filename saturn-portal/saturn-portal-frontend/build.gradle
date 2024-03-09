@@ -1,12 +1,23 @@
 plugins {
+    id "com.github.node-gradle.node" version "7.0.2"
+    id 'java'
 }
-
 group = 'hu.bme.aut'
 version = '0.0.1'
 
-repositories {
-    mavenCentral()
+node {
+    nodeProjectDir = file("${project.projectDir}")
 }
 
-dependencies {
+tasks.register('npmRunBuild', NpmTask) {
+    dependsOn tasks.npmInstall
+
+    npmCommand.set(['run', 'build'])
+    inputs.files('angular.json', '.browserslistrc', 'tsconfig.json', 'tsconfig.app.json', 'tsconfig.worker.json')
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.dir(project.fileTree('src').exclude('**/*.spec.ts'))
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.dir(project.fileTree('node_modules').exclude('.cache', '.cli-ngcc'))
+    outputs.dir(project.layout.projectDirectory.dir('dist'))
+    outputs.cacheIf { true }
 }
