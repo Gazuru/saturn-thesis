@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/portal_backend
+    username: saturn
+    password: saturn
+    driver-class-name: org.postgresql.Driver
+  devtools:
+    restart:
+      additional-paths:
+        - src/main/java/
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: portal_backend
+  liquibase:
+    change-log: classpath:db/changelog/master.yaml
+    default-schema: portal_backend
+server:
+  servlet:
+    context-path: "/api"
+  port: 8300

@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'org.openapi.generator'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+openApiGenerate {
+    generatorName = 'spring'
+    inputSpec = "${rootProject.projectDir}/openapi-spec/portal-backend-api.yaml"
+    modelNameSuffix = 'Dto'
+    configOptions = [
+            annotationLibrary      : 'none',
+            apiPackage             : 'hu.bme.aut.portal.backend.web.v1',
+            documentationProvider  : 'none',
+            generateSupportingFiles: 'false',
+            interfaceOnly          : 'true',
+            modelPackage           : 'hu.bme.aut.portal.backend.service.v1',
+            openApiNullable        : 'false',
+            skipDefaultInterface   : 'true',
+            unhandledException     : 'true',
+            useSpringBoot3         : 'true',
+            useJakartaEe           : 'true',
+            useSpringController    : 'true',
+            useSwaggerUI           : 'false',
+            useTags                : 'true'
+    ]
+}
