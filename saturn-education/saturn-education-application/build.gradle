@@ -9,9 +9,9 @@ version = '0.0.1'
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework:spring-web'
 
+    implementation project(':saturn-shared:backend-auth')
     implementation project(':saturn-education:saturn-education-web')
 
     compileOnly 'org.springframework.boot:spring-boot-devtools'

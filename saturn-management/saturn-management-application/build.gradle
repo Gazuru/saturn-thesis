@@ -12,6 +12,7 @@ dependencies {
     implementation 'org.springframework:spring-web'
 
     implementation project(':saturn-management:saturn-management-web')
+    implementation project(':saturn-shared:backend-auth')
 
     compileOnly 'org.springframework.boot:spring-boot-devtools'
 

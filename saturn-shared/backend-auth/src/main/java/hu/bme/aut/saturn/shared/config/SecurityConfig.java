@@ -1,4 +1,4 @@
-package hu.bme.aut.saturn.education.application.config;
+package hu.bme.aut.saturn.shared.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,5 +42,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
