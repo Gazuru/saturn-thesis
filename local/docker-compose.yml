@@ -1,39 +1,16 @@
 version: '3.8'
 services:
-  db-education:
-    build: postgresql/.
-    restart: always
+  saturn-mssql:
+    build: mssql/.
+    hostname: mssql
     ports:
-      - '5432:5432'
-    environment:
-      - POSTGRES_DB=saturn_education
+      - '1433:1433'
     volumes:
-      - db-education:/var/lib/postgresql/data
-      - ./init_edu.sql:/docker-entrypoint-initdb.d/init_edu.sql
-  db-management:
-    build: postgresql/.
-    restart: always
-    ports:
-      - '5433:5432'
-    environment:
-      - POSTGRES_DB=saturn_management
-    volumes:
-      - db-management:/var/lib/postgresql/data
-      - ./init_mgmt.sql:/docker-entrypoint-initdb.d/init_mgmt.sql
-  db-portal-backend:
-    build: postgresql/.
-    restart: always
-    ports:
-      - '5434:5432'
-    environment:
-      - POSTGRES_DB=portal_backend
-    volumes:
-      - db-portal-backend:/var/lib/postgresql/data
-      - ./init_portal.sql:/docker-entrypoint-initdb.d/init_portal.sql
+      - saturn-db:/var/opt/mssql
+    networks:
+      - saturn-net
+networks:
+  saturn-net:
+    driver: bridge
 volumes:
-  db-education:
-    driver: local
-  db-management:
-    driver: local
-  db-portal-backend:
-    driver: local
+  saturn-db:

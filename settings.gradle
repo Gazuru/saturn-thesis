@@ -5,15 +5,19 @@ include 'saturn-education:saturn-education-application'
 include 'saturn-education:saturn-education-persistence'
 include 'saturn-education:saturn-education-service'
 include 'saturn-education:saturn-education-web'
+
 include 'saturn-management:saturn-management-api'
 include 'saturn-management:saturn-management-application'
 include 'saturn-management:saturn-management-persistence'
 include 'saturn-management:saturn-management-service'
 include 'saturn-management:saturn-management-web'
+
 include 'saturn-portal:portal-backend:portal-backend-api'
 include 'saturn-portal:portal-backend:portal-backend-application'
 include 'saturn-portal:portal-backend:portal-backend-persistence'
 include 'saturn-portal:portal-backend:portal-backend-service'
 include 'saturn-portal:portal-backend:portal-backend-web'
+
 include 'saturn-portal:portal-frontend'
+
 include 'saturn-shared:backend-auth'

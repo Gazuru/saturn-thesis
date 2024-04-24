@@ -1,3 +1,0 @@
-FROM postgres
-ENV POSTGRES_PASSWORD saturn
-ENV POSTGRES_USER saturn
