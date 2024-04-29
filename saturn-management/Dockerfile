@@ -1,0 +1,5 @@
+FROM eclipse-temurin:19-jdk-alpine
+
+COPY "saturn-management-application/build/libs/*.jar" "app.jar"
+
+ENTRYPOINT [ "java", "-jar", "app.jar" ]

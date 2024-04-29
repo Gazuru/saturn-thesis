@@ -19,3 +19,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }
+
+tasks.register('buildImage', Exec) {
+    dependsOn 'build'
+
+    args 'build', '-t', 'saturn-education', '../.'
+}

@@ -1,0 +1,91 @@
+version: '3.8'
+services:
+  saturn-mssql:
+    build: mssql/.
+    hostname: mssql
+    ports:
+      - '1433:1433'
+    volumes:
+      - saturn-db:/var/opt/mssql
+    networks:
+      - saturn-net
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    command:
+      - start-dev
+    environment:
+      - KEYCLOAK_ADMIN=saturn
+      - KEYCLOAK_ADMIN_PASSWORD=saturn
+    volumes:
+      - keycloak:/opt/jboss/keycloak/standalone/data/
+    ports:
+      - "8400:8080"
+  saturn-education:
+    image: saturn-education:latest
+    hostname: saturn-education
+    profiles:
+      - complete
+    ports:
+      - "8100:8100"
+    depends_on:
+      saturn-mssql:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+    env_file:
+      - env.saturn.education.local
+    networks:
+      - saturn-net
+  saturn-management:
+    image: saturn-management:latest
+    hostname: saturn-management
+    profiles:
+      - complete
+    ports:
+      - "8200:8200"
+    depends_on:
+      saturn-mssql:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+    env_file:
+      - env.saturn.management.local
+    networks:
+      - saturn-net
+  saturn-portal-backend:
+    image: saturn-portal-backend:latest
+    hostname: saturn-portal-backend
+    profiles:
+      - complete
+    ports:
+      - "8300:8300"
+    depends_on:
+      saturn-mssql:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+    env_file:
+      - env.saturn.portal.backend.local
+    networks:
+      - saturn-net
+  saturn-portal-frontend:
+    image: saturn-portal-frontend:latest
+    profiles:
+      - complete
+    ports:
+      - "4200:80"
+    depends_on:
+      keycloak:
+        condition: service_started
+    volumes:
+      - type: bind
+        source: ./../config
+        target: /usr/share/nginx/conf
+    networks:
+      - saturn-net
+networks:
+  saturn-net:
+    driver: bridge
+volumes:
+  saturn-db:
+  keycloak:

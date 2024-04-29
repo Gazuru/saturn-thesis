@@ -1,0 +1,24 @@
+def defaultArgs = ['compose', '-f', './docker-compose.yaml']
+
+tasks.register('composeStack', Exec) {
+    dependsOn rootProject.subprojects.collect { it.tasks.matching { it.name == 'buildImage' } }
+
+    args defaultArgs + ['--profile', 'complete', 'up', '--detach']
+}
+
+tasks.register('composeServices', Exec) {
+    args defaultArgs + ['up', '--detach']
+}
+
+tasks.register('composeDownStack', Exec) {
+    args defaultArgs + ['--profile', 'complete', 'down']
+}
+
+tasks.register('composeDownServices', Exec) {
+    args defaultArgs + ['down']
+}
+
+tasks.withType(Exec).configureEach {
+    group 'docker'
+    executable 'docker'
+}

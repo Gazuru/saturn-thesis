@@ -21,3 +21,5 @@ include 'saturn-portal:portal-backend:portal-backend-web'
 include 'saturn-portal:portal-frontend'
 
 include 'saturn-shared:backend-auth'
+
+include 'local'

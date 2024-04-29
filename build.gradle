@@ -64,5 +64,26 @@ subprojects {
                 excludes = ['time']
             }
         }
+
+        tasks.named("bootRun") {
+            args += [
+                    '--spring.profiles.active=local'
+            ]
+        }
+
+        tasks.named("jar") {
+            destinationDirectory = layout.buildDirectory.dir("plain-jar")
+        }
     }
+}
+
+subprojects.collect {
+    it.tasks.matching { it.name == 'buildImage' }.configureEach {
+        group 'docker'
+        executable 'docker'
+    }
+}
+
+tasks.matching { it.group == 'docker' }.configureEach {
+    outputs.upToDateWhen { false }
 }
