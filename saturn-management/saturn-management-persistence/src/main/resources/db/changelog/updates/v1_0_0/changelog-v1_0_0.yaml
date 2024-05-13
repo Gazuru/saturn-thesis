@@ -2,12 +2,12 @@ databaseChangeLog:
   - changeSet:
       id: 'v1_0_0_1'
       author: JM9H5H
-      dbms: 'postgresql'
+      dbms: 'mssql'
       changes:
         - sqlFile:
-            path: alter_default_schema.sql
+            path: create_tables.sql
             relativeToChangelogFile: true
       rollback:
         - sqlFile:
-            path: alter_default_schema_rollback.sql
+            path: create_tables_rollback.sql
             relativeToChangelogFile: true

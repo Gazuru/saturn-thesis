@@ -7,6 +7,11 @@ spring:
     restart:
       additional-paths:
         - src/main/java/
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://localhost:8400/realms/saturn"
   jpa:
     hibernate:
       naming:
