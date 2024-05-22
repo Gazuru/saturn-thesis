@@ -23,21 +23,22 @@ public class Request extends BaseEntity {
     @NotNull
     private UUID requesterUuid;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "assignee_id", nullable = false)
     private Manager assignee;
 
     private String description;
 
     private String comment;
 
-    private enum RequestType {
+    public enum RequestType {
         FAIRNESS,
         DISMISSAL,
         SUBJECT,
         OTHER
     }
 
-    private enum Status {
+    public enum Status {
         NEW,
         IN_PROGRESS,
         REQUESTER_FEEDBACK,

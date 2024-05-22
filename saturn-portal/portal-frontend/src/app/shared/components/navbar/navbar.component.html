@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+  <div>
+    <button mat-button [routerLink]="['/welcome']">
+      SATURN
+    </button>
+    @if (keycloakService.isStudent) {
+      <button mat-button [routerLink]="['/semesters']">
+        Szemeszterek
+      </button>
+    }
+    @if (keycloakService.isStudent) {
+      <button mat-button [routerLink]="['/subjects/registration']">
+        Tárgyfelvétel
+      </button>
+    }
+    @if (keycloakService.isStudent || keycloakService.isTeacher) {
+      <button mat-button [routerLink]="['/timetable']">
+        Órarend
+      </button>
+    }
+    @if (keycloakService.isStudent) {
+      <button mat-button [routerLink]="['/averages']">
+        Tanulmányi átlagok
+      </button>
+    }
+    @if (keycloakService.isStudent) {
+      <button mat-button [routerLink]="['/exams/registration']">
+        Vizsgajelentkezés
+      </button>
+    }
+    @if (keycloakService.isTeacher) {
+      <button mat-button [routerLink]="['/subjects']">
+        Tárgyak kezelése
+      </button>
+    }
+    @if (keycloakService.isTeacher) {
+      <button mat-button [routerLink]="['/grading']">
+        Érdemjegy beírása
+      </button>
+    }
+    @if (keycloakService.isStudent || keycloakService.isManager) {
+      <button mat-button [routerLink]="['/requests']">
+        Kérvények
+      </button>
+    }
+    @if (keycloakService.isManager) {
+      <button mat-button [routerLink]="['/invite']">
+        Felhasználó meghívása
+      </button>
+    }
+    @if (keycloakService.isStudent || keycloakService.isManager) {
+      <button mat-button [routerLink]="['/monetary']">
+        Pénzügyek
+      </button>
+    }
+    <button mat-button>
+      Placeholder1
+    </button>
+    <button mat-button>
+      Placeholder2
+    </button>
+  </div>
+  <app-header></app-header>
+</mat-toolbar>

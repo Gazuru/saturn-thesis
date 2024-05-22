@@ -11,3 +11,15 @@ databaseChangeLog:
         - sqlFile:
             path: create_tables_rollback.sql
             relativeToChangelogFile: true
+  - changeSet:
+      id: 'v1_0_0_2'
+      author: JM9H5H
+      dbms: 'mssql'
+      changes:
+        - sqlFile:
+            path: add_test_data.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: add_test_data_rollback.sql
+            relativeToChangelogFile: true

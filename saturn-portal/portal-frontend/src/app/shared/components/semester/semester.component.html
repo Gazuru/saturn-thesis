@@ -1,0 +1,24 @@
+<h1>Semester Component</h1>
+<title>Szemeszterek</title>
+
+<mat-card>
+  <mat-card-title>
+    <h1>Szemeszterre jelentkezés</h1>
+  </mat-card-title>
+  @if (currentSemester$ | async; as semester) {
+    <mat-card-content>
+      <div class="semesterRegistration">
+        <h2>{{ semester.semesterStart }} - {{ semester.semesterEnd }} ({{ semester.periodOfYear }})</h2>
+        @if (registered) {
+          <mat-icon>check_circle_outline</mat-icon>
+        }
+      </div>
+      <mat-radio-group [(ngModel)]="selectedStatus">
+        @for (status of statuses; track status) {
+          <mat-radio-button [value]="status">{{ status }}</mat-radio-button>
+        }
+      </mat-radio-group>
+      <button mat-raised-button color="primary" (click)="registerForCurrent()">Mentés</button>
+    </mat-card-content>
+  }
+</mat-card>

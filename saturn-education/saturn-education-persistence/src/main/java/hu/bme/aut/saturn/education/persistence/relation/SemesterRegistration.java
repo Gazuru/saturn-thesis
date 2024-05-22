@@ -25,14 +25,14 @@ public class SemesterRegistration {
     @JoinColumn(name = "SEMESTER_ID", nullable = false)
     private Semester semester;
 
-    @OneToMany(mappedBy = "semesterRegistration")
+    @OneToMany(mappedBy = "semesterRegistration", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SubjectRegistration> subjectRegistrations;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Status status = Status.INACTIVE;
 
-    private enum Status {
+    public enum Status {
         INACTIVE,
         PASSIVE,
         ACTIVE,

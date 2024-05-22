@@ -9,18 +9,13 @@
         Sign In
       </button>
     } @else {
-      <div class="flex items-center">
-        <p class="profile" data-testid="p-username">
-          Welcome {{ userValue.name }}
-        </p>
-        <button
-          (click)="securityStore.signOut()"
-          data-testid="btn-sign-out"
-          mat-raised-button
-        >
-          Sign Out
-        </button>
-      </div>
+      <button
+        (click)="securityStore.signOut()"
+        data-testid="btn-sign-out"
+        mat-raised-button
+      >
+        Sign Out
+      </button>
     }
   }
 </div>

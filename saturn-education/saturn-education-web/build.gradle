@@ -17,7 +17,10 @@ repositories {
 
 dependencies {
     api project(':saturn-education:saturn-education-service')
+    api project(':saturn-education:saturn-education-management-client')
     implementation project(':saturn-shared:backend-auth')
+
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
 
     implementation 'org.springframework.security:spring-security-web'
 

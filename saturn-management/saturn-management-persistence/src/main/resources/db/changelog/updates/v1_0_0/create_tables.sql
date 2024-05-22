@@ -26,7 +26,7 @@ create table T_MAN_REQUESTS
 );
 create table T_MAN_STUDENTS
 (
-    degree smallint check (degree between 0 and 3),
+    degree varchar(255)     not null check (degree in ('COMPSCI_BSC', 'ELECTR_BSC', 'COMPSCI_MSC', 'ELECTR_MSC')),
     id     uniqueidentifier not null,
     primary key (id)
 );

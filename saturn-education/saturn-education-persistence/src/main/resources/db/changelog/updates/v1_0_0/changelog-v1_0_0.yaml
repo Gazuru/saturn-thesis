@@ -11,3 +11,27 @@ databaseChangeLog:
         - sqlFile:
             path: create_tables_rollback.sql
             relativeToChangelogFile: true
+  - changeSet:
+      id: 'v1_0_0_2'
+      author: JM9H5H
+      dbms: 'mssql'
+      changes:
+        - sqlFile:
+            path: add_semesters.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: add_semesters_rollback.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 'v1_0_0_3'
+      author: JM9H5H
+      dbms: 'mssql'
+      changes:
+        - sqlFile:
+            path: update_T_EDU_SUBJECTS.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: update_T_EDU_SUBJECTS_rollback.sql
+            relativeToChangelogFile: true

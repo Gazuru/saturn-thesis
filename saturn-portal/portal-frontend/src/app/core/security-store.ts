@@ -2,6 +2,7 @@ import {computed, inject, Injectable, PLATFORM_ID, signal} from "@angular/core";
 import {isPlatformServer} from "@angular/common";
 import {KeycloakService} from "../auth/services/keycloak.service";
 import {ANONYMOUS_USER, User} from "../auth/models/auth-models";
+import {Router} from "@angular/router";
 
 @Injectable({providedIn: "root"})
 export class SecurityStore {
@@ -13,7 +14,7 @@ export class SecurityStore {
   loadedUser = computed(() => (this.loaded() ? this.user : undefined));
   signedIn = computed(() => this.loaded() && !this.user()?.anonymous);
 
-  constructor() {
+  constructor(protected readonly router: Router) {
     this.onInit().then();
   }
 
@@ -45,7 +46,7 @@ export class SecurityStore {
   }
 
   async signIn() {
-    await this.#keycloakService.login();
+    await this.#keycloakService.login().then(() => this.router.navigate(['/welcome']));
   }
 
   async signOut() {

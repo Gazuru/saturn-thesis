@@ -1,4 +1,4 @@
-import {Component, inject} from "@angular/core";
+import {Component} from "@angular/core";
 import {RouterLink} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {AsyncPipe} from "@angular/common";
@@ -12,6 +12,9 @@ import {SecurityStore} from "../../../core/security-store";
   imports: [RouterLink, MatButtonModule, AsyncPipe],
 })
 export class HeaderComponent {
-  securityStore = inject(SecurityStore);
+
+  constructor(protected readonly securityStore: SecurityStore) {
+  }
+
   user = this.securityStore.user;
 }

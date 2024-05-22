@@ -15,6 +15,9 @@ import lombok.Setter;
 @Table(name = "T_EDU_SUBJECTS")
 public class Subject extends BaseEntity {
 
+    @NotNull
+    private String name;
+
     @OneToMany(mappedBy = "subject")
     private List<Course> courses;
 

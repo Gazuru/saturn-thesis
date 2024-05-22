@@ -1,0 +1,43 @@
+plugins {
+    id 'java-library'
+    id 'org.openapi.generator'
+}
+
+dependencies {
+    api 'org.springframework:spring-web'
+    implementation project(':saturn-education:saturn-education-api')
+
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+
+    implementation 'org.springframework.security:spring-security-web'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "${project.buildDir}/generate-resources/main/src/main/java"
+        }
+    }
+}
+
+openApiGenerate {
+    generatorName = 'java'
+    inputSpec = "${rootProject.projectDir}/openapi-spec/saturn-management-api.yaml"
+    modelNameSuffix = 'Dto'
+    configOptions = [
+            annotationLibrary: 'none',
+            apiPackage       : 'hu.bme.aut.saturn.education.managementclient.v1',
+            library          : 'resttemplate',
+            modelPackage     : 'hu.bme.aut.saturn.education.managementclient.v1.dto',
+            openApiNullable  : 'false',
+            useJakartaEe     : 'true'
+    ]
+}

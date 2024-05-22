@@ -1,14 +1,7 @@
+<app-navbar></app-navbar>
+
 <div>
-  <h1>Observer</h1>
-  <p *ngIf="user$ | async as user">{{ user.name }}</p>
-  <h1>Subscriber</h1>
-  <button (click)="onClick()">Teszt</button>
-  <p *ngIf="user">{{ user.name }}</p>
-
-  <h1 *ngIf="keycloakService.isManager">Hello Manager!</h1>
-  <h1 *ngIf="keycloakService.isStudent">Hello Student!</h1>
-  <h1 *ngIf="keycloakService.isTeacher">Hello Teacher!</h1>
-  <h1 *ngIf="keycloakService.isAdmin">Hello Admin!</h1>
-
-  <app-header></app-header>
+  Router Outlet:
+  <router-outlet></router-outlet>
 </div>
+

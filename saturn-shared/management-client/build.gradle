@@ -1,0 +1,32 @@
+plugins {
+    id 'java-library'
+    id 'org.openapi.generator'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "${project.buildDir}/generate-resources/main/src/main/java"
+        }
+    }
+}
+
+openApiGenerate {
+    generatorName = 'java'
+    inputSpec = "${rootProject.projectDir}/openapi-spec/saturn-management-api.yaml"
+    modelNameSuffix = 'Dto'
+    configOptions = [
+            annotationLibrary: 'none',
+            apiPackage       : 'hu.bme.aut.saturn.shared.managementclient.v1',
+            library          : 'resttemplate',
+            modelPackage     : 'hu.bme.aut.saturn.shared.managementclient.v1.dto',
+            openApiNullable  : 'false',
+            useJakartaEe     : 'true',
+            useBeanValidation: 'true'
+    ]
+}

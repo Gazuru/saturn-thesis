@@ -21,7 +21,7 @@ public class Document extends BaseEntity {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    private enum DocumentType {
+    public enum DocumentType {
         ID_CARD,
         STUDENT_ID_CARD,
         TAX_ID_CARD

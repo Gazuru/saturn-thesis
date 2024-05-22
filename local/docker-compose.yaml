@@ -2,6 +2,7 @@ version: '3.8'
 services:
   saturn-mssql:
     build: mssql/.
+    restart: always
     hostname: mssql
     ports:
       - '1433:1433'
@@ -11,6 +12,7 @@ services:
       - saturn-net
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.3
+    restart: always
     command:
       - start-dev
     environment:

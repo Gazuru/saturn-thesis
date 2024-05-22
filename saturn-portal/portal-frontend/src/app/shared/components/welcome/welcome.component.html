@@ -1,0 +1,14 @@
+<h1>Welcome component</h1>
+
+@if (keycloakService.isManager) {
+  <h1>Hello Manager!</h1>
+}
+@if (keycloakService.isStudent) {
+  <h1>Hello Student!</h1>
+}
+@if (keycloakService.isTeacher) {
+  <h1>Hello Teacher!</h1>
+}
+@if (keycloakService.isAdmin) {
+  <h1>Hello Admin!</h1>
+}

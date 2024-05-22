@@ -12,13 +12,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -43,23 +38,11 @@ public class AuthenticationAutoConfiguration {
                             authorizeRequests
                                     .anyRequest().authenticated()
                     )
+                    .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .oauth2ResourceServer(oauth2 -> oauth2
                             .bearerTokenResolver(tokenResolver)
                             .jwt(jwt -> jwt.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())));
             return http.build();
-        }
-
-        @Bean
-        @Profile("local")
-        UserDetailsService userDetailsService() {
-            PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-            UserDetails userDetails = User.builder()
-                    .username("admin")
-                    .password("password")
-                    .passwordEncoder(encoder::encode)
-                    .roles("USER")
-                    .build();
-            return new InMemoryUserDetailsManager(userDetails);
         }
     }
 

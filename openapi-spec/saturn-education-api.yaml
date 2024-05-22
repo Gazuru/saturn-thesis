@@ -7,21 +7,76 @@ servers:
   - url: http://localhost:8100/api
     description: Local environment
 paths:
-  /v1/test:
+  /v1/current-semester:
     get:
       tags:
-        - Dummy
-      operationId: getTest
+        - Semester
+      operationId: getCurrentSemester
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/Semester'
+  /v1/current-semester/registration:
+    get:
+      tags:
+        - Semester
+      operationId: getCurrentSemesterRegistration
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SemesterRegistration'
+  /v1/current-semester/register:
+    post:
+      tags:
+        - Semester
+      operationId: registerForCurrentSemester
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - PASSIVE
+                    - ACTIVE
+      responses:
+        "200":
+          description: Successful operation
+
 components:
   schemas:
-    User:
+    Semester:
       properties:
-        name:
+        semesterStart:
           type: string
+          format: date
+        semesterEnd:
+          type: string
+          format: date
+        periodOfYear:
+          type: string
+          enum:
+            - SPRING
+            - AUTUMN
+    SemesterRegistration:
+      properties:
+        studentUuid:
+          type: string
+          format: uuid
+        semesterUuid:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - INACTIVE
+            - PASSIVE
+            - ACTIVE
+            - FINISHED

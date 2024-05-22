@@ -20,7 +20,7 @@ export class KeycloakService {
       this._keycloak = new Keycloak({
         url: "http://localhost:8400",
         realm: "saturn",
-        clientId: "saturn"
+        clientId: "saturn",
       });
     }
     return this._keycloak;
@@ -40,6 +40,10 @@ export class KeycloakService {
     return true;
   }
 
+  get isAuthenticated(): boolean {
+    return !!this.profile?.token;
+  }
+
   get isStudent(): boolean {
     return this.keycloak?.hasResourceRole("student", "saturn");
   }
@@ -56,9 +60,8 @@ export class KeycloakService {
     return this.isStudent && this.isTeacher && this.isManager;
   }
 
-
   login() {
-    return this.keycloak.login();
+    return this.keycloak.login({redirectUri: 'http://localhost:4200/welcome/'});
   }
 
   logout() {

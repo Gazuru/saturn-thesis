@@ -6,4 +6,115 @@ info:
 servers:
   - url: http://localhost:8200/api
     description: Local environment
-paths: {}
+paths:
+  /v1/user:
+    get:
+      parameters:
+        - in: query
+          name: saturnCode
+          schema:
+            type: string
+      tags:
+        - User
+      operationId: getUser
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        saturnCode:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        locationOfBirth:
+          type: string
+        studentInformation:
+          $ref: '#/components/schemas/Student'
+        teacherInformation:
+          $ref: '#/components/schemas/Teacher'
+        managerInformation:
+          $ref: '#/components/schemas/Manager'
+    Student:
+      properties:
+        id:
+          type: string
+          format: uuid
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        degree:
+          type: string
+          enum:
+            - COMPSCI_BSC
+            - ELECTR_BSC
+            - COMPSCI_MSC
+            - ELECTR_MSC
+    Teacher:
+      properties:
+        id:
+          type: string
+          format: uuid
+    Manager:
+      properties:
+        id:
+          type: string
+          format: uuid
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/Request'
+    Request:
+      properties:
+        requestType:
+          type: string
+          enum:
+            - FAIRNESS
+            - DISMISSAL
+            - SUBJECT
+            - OTHER
+        status:
+          type: string
+          enum:
+            - NEW
+            - IN_PROGRESS
+            - REQUESTER_FEEDBACK
+            - IN_REVIEW
+            - ACCEPTED
+            - DENIED
+        requesterUuid:
+          type: string
+          format: uuid
+        assignee:
+          type: string
+          format: uuid
+        description:
+          type: string
+        comment:
+          type: string
+    Document:
+      properties:
+        type:
+          type: string
+          enum:
+            - ID_CARD
+            - STUDENT_ID_CARD
+            - TAX_ID_CARD
+        identifier:
+          type: string
+        studentId:
+          type: string

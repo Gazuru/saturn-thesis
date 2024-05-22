@@ -2,6 +2,7 @@ rootProject.name = 'Saturn'
 
 include 'saturn-education:saturn-education-api'
 include 'saturn-education:saturn-education-application'
+include 'saturn-education:saturn-education-management-client'
 include 'saturn-education:saturn-education-persistence'
 include 'saturn-education:saturn-education-service'
 include 'saturn-education:saturn-education-web'

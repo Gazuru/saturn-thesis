@@ -9,6 +9,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule, provideHttpClient, withInterceptors} from "@angular/common/http";
 import {HeaderComponent} from "./auth/components/header/header.component";
 import {securityInterceptor} from "./core/security-interceptor";
+import {NavbarComponent} from "./shared/components/navbar/navbar.component";
+import {SemesterComponent} from "./shared/components/semester/semester.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {securityInterceptor} from "./core/security-interceptor";
     BrowserAnimationsModule,
     MatButtonModule,
     HttpClientModule,
-    HeaderComponent
+    HeaderComponent,
+    NavbarComponent,
+    SemesterComponent,
   ],
   providers: [
     provideHttpClient(withInterceptors([

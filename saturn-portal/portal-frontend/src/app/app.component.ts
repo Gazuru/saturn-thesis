@@ -1,27 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {DummyService, User} from "../modules/generated";
-import {Observable} from "rxjs";
-import {KeycloakService} from "./auth/services/keycloak.service";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'saturn-portal-frontend';
-  user$?: Observable<User>;
-  user?: User;
 
-  constructor(protected readonly dummyService: DummyService, protected readonly keycloakService: KeycloakService) {
-  }
-
-  ngOnInit() {
-    this.user$ = this.dummyService.getTest();
-  }
-
-  onClick() {
-    this.user$ = this.dummyService.getTest();
-    this.user$?.subscribe(data => this.user = data);
+  constructor() {
   }
 }

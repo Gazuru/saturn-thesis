@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 group = 'hu.bme.aut'
@@ -16,6 +16,9 @@ repositories {
 }
 
 dependencies {
+    api 'org.springframework.data:spring-data-commons'
+    api 'org.springframework:spring-tx'
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
