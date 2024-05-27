@@ -1,0 +1,18 @@
+<h2>Subjects Component</h2>
+
+@if (subjects$ | async; as subjects) {
+  <mat-form-field>
+    <mat-label>Tárgy kiválasztása</mat-label>
+    <mat-select [(ngModel)]="selectedSubject">
+      @for (subject of subjects; track subject) {
+        <mat-option [value]="subject">{{ subject.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+} @else {
+  <mat-spinner></mat-spinner>
+}
+
+@if (selectedSubject) {
+  <app-subject-details [subject]="selectedSubject"></app-subject-details>
+}

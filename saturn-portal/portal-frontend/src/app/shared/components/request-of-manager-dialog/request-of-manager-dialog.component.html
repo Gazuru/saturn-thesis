@@ -1,0 +1,40 @@
+<div class="form">
+  <h2>
+    Kérvény változtatása
+  </h2>
+  <form [formGroup]="form">
+
+    <mat-form-field>
+      <mat-label>Típus</mat-label>
+      <mat-select formControlName="requestType">
+        @for (requestType of requestTypes; track requestType) {
+          <mat-option [value]="requestType">{{ requestType | requestType }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Állapot</mat-label>
+      <mat-select formControlName="status">
+        @for (status of statuses; track status) {
+          <mat-option [value]="status">{{ status | requestStatus }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Leírás</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Megjegyzés</mat-label>
+      <textarea matInput formControlName="comment"></textarea>
+    </mat-form-field>
+
+    <div class="buttonContainer">
+      <button mat-raised-button (click)="onCancel()">Mégse</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="onSave()">Mentés</button>
+    </div>
+  </form>
+</div>

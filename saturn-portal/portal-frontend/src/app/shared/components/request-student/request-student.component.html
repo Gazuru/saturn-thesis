@@ -1,0 +1,77 @@
+<p>request-student works!</p>
+
+<div>
+  <mat-card>
+    <mat-card-title>
+      <h1>Kérvény benyújtása</h1>
+    </mat-card-title>
+    <form [formGroup]="requestFormGroup" (ngSubmit)="sendRequest()">
+      <mat-card-content>
+
+        <mat-form-field>
+          <mat-label>Kérvény típusa</mat-label>
+          <mat-select formControlName="requestType">
+            <mat-option value="FAIRNESS">Méltányossági</mat-option>
+            <mat-option value="DISMISSAL">Jogviszony felmondása</mat-option>
+            <mat-option value="SUBJECT">Tárgyi ügyek</mat-option>
+            <mat-option value="OTHER">Egyéb</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Leírás</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Megjegyzés</mat-label>
+          <textarea matInput formControlName="comment"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!requestFormGroup.valid">Mentés</button>
+      </mat-card-content>
+    </form>
+  </mat-card>
+
+  @if (requests) {
+    @if (requests.length > 0) {
+      <mat-card>
+        <mat-card-title><h1>Benyújtott kérvények</h1></mat-card-title>
+        <mat-card-content>
+
+          <mat-table [dataSource]="requests">
+
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef>Státusz</mat-header-cell>
+              <mat-cell *matCellDef="let request">{{ request.status | requestStatus }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="requestType">
+              <mat-header-cell *matHeaderCellDef>Típus</mat-header-cell>
+              <mat-cell *matCellDef="let request">{{ request.requestType | requestType }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef>Leírás</mat-header-cell>
+              <mat-cell *matCellDef="let request">{{ request.description }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="comment">
+              <mat-header-cell *matHeaderCellDef>Megjegyzés</mat-header-cell>
+              <mat-cell *matCellDef="let request" matTooltip="{{request.comment}}">{{ request.comment }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="assignee">
+              <mat-header-cell *matHeaderCellDef>Ügyintéző</mat-header-cell>
+              <mat-cell *matCellDef="let request">{{ request.assignee }}</mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+</div>

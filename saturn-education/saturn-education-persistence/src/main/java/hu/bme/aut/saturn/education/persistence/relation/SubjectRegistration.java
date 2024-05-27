@@ -30,4 +30,10 @@ public class SubjectRegistration {
 
     @Nullable
     private Long grade;
+
+    @PreRemove
+    private void preRemove() {
+        subject.removeSubjectRegistration(this);
+        semesterRegistration.removeSubjectRegistration(this);
+    }
 }

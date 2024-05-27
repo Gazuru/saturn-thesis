@@ -1,0 +1,127 @@
+<div>
+  <mat-card>
+    <mat-card-title>
+      Tárgy módosítása
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{ subject.name }}
+    </mat-card-subtitle>
+    <mat-card-content>
+      <form [formGroup]="subjectForm" (ngSubmit)="saveSubject()">
+        <mat-form-field>
+          <mat-label>Tárgy neve</mat-label>
+          <input matInput formControlName="subjectName">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Kreditérték</mat-label>
+          <input matInput type="number" min="1" formControlName="creditAmount">
+        </mat-form-field>
+        <mat-radio-group formControlName="period">
+          <mat-radio-button value="SPRING">Tavaszi</mat-radio-button>
+          <mat-radio-button value="AUTUMN">Őszi</mat-radio-button>
+        </mat-radio-group>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!subjectForm.valid">Mentés</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Kurzusok</mat-card-title>
+    <mat-card-content>
+      @if (courses$ | async; as courses) {
+        @if (courses.length > 0) {
+          <mat-table [dataSource]="courses">
+
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef>Név</mat-header-cell>
+              <mat-cell *matCellDef="let course">{{ course.name }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="courseType">
+              <mat-header-cell *matHeaderCellDef>Típus</mat-header-cell>
+              <mat-cell *matCellDef="let course">{{ course.courseType | courseType }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startTime">
+              <mat-header-cell *matHeaderCellDef>Időpont</mat-header-cell>
+              <mat-cell *matCellDef="let course">{{ course.startTime }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="length">
+              <mat-header-cell *matHeaderCellDef>Hossz</mat-header-cell>
+              <mat-cell *matCellDef="let course">{{ course.length }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dayOfWeek">
+              <mat-header-cell *matHeaderCellDef>Nap</mat-header-cell>
+              <mat-cell *matCellDef="let course">{{ course.dayOfWeek | dayOfWeek }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="location">
+              <mat-header-cell *matHeaderCellDef>Hely</mat-header-cell>
+              <mat-cell *matCellDef="let course">{{ course.location }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="courseTeachers">
+              <mat-header-cell *matHeaderCellDef>
+                Oktatók
+              </mat-header-cell>
+              <mat-cell *matCellDef="let course"
+                        matTooltip="{{ course.courseTeachers.join(', ') }}">{{ course.courseTeachers.join(", ") }}
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+        } @else {
+          <h2>Nincsenek még kurzusok ehhez a tárgyhoz!</h2>
+        }
+      } @else {
+        <mat-spinner></mat-spinner>
+      }
+
+      <button mat-raised-button color="primary" (click)="openDialog()">Kurzus hozzáadása</button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Hallgatók</mat-card-title>
+    <mat-card-content>
+      @if (students && students.length > 0) {
+        <mat-table [dataSource]="students">
+
+          <ng-container matColumnDef="firstName">
+            <mat-header-cell *matHeaderCellDef>Keresztnév</mat-header-cell>
+            <mat-cell *matCellDef="let student">{{ student.firstName }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="lastName">
+            <mat-header-cell *matHeaderCellDef>Vezetéknév</mat-header-cell>
+            <mat-cell *matCellDef="let student">{{ student.lastName }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="saturnCode">
+            <mat-header-cell *matHeaderCellDef>Saturn Kód</mat-header-cell>
+            <mat-cell *matCellDef="let student">{{ student.saturnCode }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="remove">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let student">
+              <button mat-icon-button (click)="removeStudent(student)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="studentDisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: studentDisplayedColumns"></mat-row>
+        </mat-table>
+      } @else {
+        <h2>Nem jelentkezett még hallgató erre a tárgyra!</h2>
+      }
+
+    </mat-card-content>
+  </mat-card>
+</div>

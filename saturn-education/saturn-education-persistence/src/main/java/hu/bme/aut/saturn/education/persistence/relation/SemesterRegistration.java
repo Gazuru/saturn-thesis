@@ -3,6 +3,7 @@ package hu.bme.aut.saturn.education.persistence.relation;
 import hu.bme.aut.saturn.education.persistence.entity.Semester;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
@@ -37,5 +38,18 @@ public class SemesterRegistration {
         PASSIVE,
         ACTIVE,
         FINISHED
+    }
+
+    public void addSubjectRegistration(SubjectRegistration subjectRegistration) {
+        if (subjectRegistrations == null) {
+            subjectRegistrations = new ArrayList<>();
+        }
+        if (!subjectRegistrations.contains(subjectRegistration)) {
+            subjectRegistrations.add(subjectRegistration);
+        }
+    }
+
+    public void removeSubjectRegistration(SubjectRegistration subjectRegistration) {
+        subjectRegistrations.remove(subjectRegistration);
     }
 }

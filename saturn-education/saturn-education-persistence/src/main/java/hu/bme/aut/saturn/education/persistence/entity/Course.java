@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,16 +40,39 @@ public class Course extends BaseEntity {
 
     private String location;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CourseRegistration> courseRegistrations;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CourseTeacher> courseTeachers;
 
-    private enum CourseType {
+
+    public enum CourseType {
         LECTURE,
         PRACTICE,
         LABORATORY,
-        EXAM
+        EXAM;
+    }
+
+    public void addCourseTeacher(CourseTeacher courseTeacher) {
+        if (courseTeachers == null) {
+            courseTeachers = new ArrayList<>();
+        }
+        if (!courseTeachers.contains(courseTeacher)) {
+            courseTeachers.add(courseTeacher);
+        }
+    }
+
+    public void addCourseRegistration(CourseRegistration courseRegistration) {
+        if (courseRegistrations == null) {
+            courseRegistrations = new ArrayList<>();
+        }
+        if (!courseRegistrations.contains(courseRegistration)) {
+            courseRegistrations.add(courseRegistration);
+        }
+    }
+
+    public void removeCourseRegistration(CourseRegistration courseRegistration) {
+        courseRegistrations.remove(courseRegistration);
     }
 }

@@ -10,6 +10,7 @@ import {Semester} from "../../../../modules/generated/model/semester";
 import {FormsModule} from "@angular/forms";
 import {RegisterForCurrentSemesterRequest, SemesterRegistration} from "../../../../modules/generated";
 import {MatIcon} from "@angular/material/icon";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import StatusEnum = RegisterForCurrentSemesterRequest.StatusEnum;
 
 @Component({
@@ -43,7 +44,7 @@ export class SemesterComponent implements OnInit {
 
   registered: boolean = false;
 
-  constructor(protected readonly semesterService: SemesterService) {
+  constructor(protected readonly semesterService: SemesterService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -56,6 +57,9 @@ export class SemesterComponent implements OnInit {
   }
 
   registerForCurrent() {
-    this.semesterService.registerForCurrentSemester({status: this.selectedStatus as StatusEnum}).subscribe(() => this.registered = true);
+    this.semesterService.registerForCurrentSemester({status: this.selectedStatus as StatusEnum}).subscribe(() => {
+      this.registered = true;
+      this.snackBar.open("Szemeszter jelentkezés sikeresen elmentve!");
+    });
   }
 }

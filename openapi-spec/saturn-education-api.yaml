@@ -49,9 +49,363 @@ paths:
       responses:
         "200":
           description: Successful operation
-
+  /v1/current-semester/subjects:
+    get:
+      tags:
+        - Subject
+      operationId: getSubjectsOfCurrentSemester
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubjectOfStudent'
+  /v1/current-semester/courses:
+    get:
+      tags:
+        - Course
+      operationId: getCoursesOfCurrentSemester
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+  /v1/current-semester/subjects/{subjectUuid}/register:
+    post:
+      tags:
+        - Subject
+      operationId: registerForSubjectOfCurrentSemester
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+  /v1/courses/{courseUuid}/register:
+    post:
+      tags:
+        - Course
+      operationId: registerForCourse
+      parameters:
+        - name: courseUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+  /v1/current-semester/subject-registrations:
+    get:
+      tags:
+        - Subject
+      operationId: getSubjectRegistrationsOfCurrentSemester
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubjectRegistration'
+  /v1/semesters:
+    get:
+      tags:
+        - Semester
+      operationId: getSemesterRegistrations
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SemesterRegistrationOfStudent'
+  /v1/semester/{semesterUuid}/subjects:
+    get:
+      tags:
+        - Subject
+      operationId: getSubjectsOfSemester
+      parameters:
+        - name: semesterUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubjectRegistrationOfStudent'
+  /v1/subjects:
+    post:
+      tags:
+        - Subject
+      operationId: createSubject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                subjectName:
+                  type: string
+                creditAmount:
+                  type: number
+                period:
+                  type: string
+                  enum:
+                    - SPRING
+                    - AUTUMN
+                subjectDeputies:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        "200":
+          description: Successful operation
+    get:
+      tags:
+        - Subject
+      operationId: getSubjectsOfTeacher
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubjectOfTeacher'
+  /v1/subject/{subjectUuid}:
+    put:
+      tags:
+        - Subject
+      operationId: updateSubject
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                subjectName:
+                  type: string
+                creditAmount:
+                  type: number
+                period:
+                  type: string
+                  enum:
+                    - SPRING
+                    - AUTUMN
+                subjectDeputies:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        "200":
+          description: Successful operation
+  /v1/subject/{subjectUuid}/students:
+    get:
+      tags:
+        - Subject
+      operationId: getRegisteredStudents
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+  /v1/subject/{subjectUuid}/student/{studentUuid}:
+    delete:
+      tags:
+        - Subject
+      operationId: removeStudentRegistration
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: studentUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: No content
+  /v1/subject/{subjectUuid}/courses:
+    get:
+      tags:
+        - Course
+      operationId: getCoursesOfSubject
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+    post:
+      tags:
+        - Course
+      operationId: createCourseForSubject
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                courseName:
+                  type: string
+                courseType:
+                  type: string
+                  enum:
+                    - LECTURE
+                    - PRACTICE
+                    - LABORATORY
+                    - EXAM
+                startTime:
+                  type: string
+                length:
+                  type: number
+                dayOfWeek:
+                  type: string
+                  enum:
+                    - MONDAY
+                    - TUESDAY
+                    - WEDNESDAY
+                    - THURSDAY
+                    - FRIDAY
+                location:
+                  type: string
+                courseDeputies:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        "200":
+          description: Successful operation
+  /v1/subjects/{subjectUuid}/courses/registrations:
+    get:
+      tags:
+        - Course
+      operationId: getCourseRegistrationsOfSubject
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseRegistration'
 components:
   schemas:
+    Course:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        courseType:
+          type: string
+          enum:
+            - LECTURE
+            - PRACTICE
+            - LABORATORY
+            - EXAM
+        startTime:
+          type: string
+        length:
+          type: number
+        dayOfWeek:
+          type: string
+          enum:
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+            - SUNDAY
+        location:
+          type: string
+        courseTeachers:
+          type: array
+          items:
+            type: string
+    CourseRegistration:
+      properties:
+        studentUuid:
+          type: string
+          format: uuid
+        courseUuid:
+          type: string
+          format: uuid
     Semester:
       properties:
         semesterStart:
@@ -80,3 +434,71 @@ components:
             - PASSIVE
             - ACTIVE
             - FINISHED
+    SemesterRegistrationOfStudent:
+      properties:
+        id:
+          type: string
+          format: uuid
+        semesterStart:
+          type: string
+          format: date
+        semesterEnd:
+          type: string
+          format: date
+        periodOfYear:
+          type: string
+          enum:
+            - SPRING
+            - AUTUMN
+        status:
+          type: string
+          enum:
+            - INACTIVE
+            - PASSIVE
+            - ACTIVE
+            - FINISHED
+    SubjectRegistration:
+      properties:
+        studentUuid:
+          type: string
+          format: uuid
+        subjectUuid:
+          type: string
+          format: uuid
+        grade:
+          type: number
+    SubjectRegistrationOfStudent:
+      properties:
+        name:
+          type: string
+        creditIndex:
+          type: number
+        grade:
+          type: number
+    SubjectOfTeacher:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        creditIndex:
+          type: number
+        registerablePeriodOfYear:
+          type: string
+          enum:
+            - SPRING
+            - AUTUMN
+    SubjectOfStudent:
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        creditIndex:
+          type: number
+        subjectDeputies:
+          type: array
+          items:
+            type: string

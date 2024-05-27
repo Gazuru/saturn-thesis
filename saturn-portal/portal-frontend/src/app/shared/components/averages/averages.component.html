@@ -1,0 +1,45 @@
+<p>averages works!</p>
+
+@if (semesterRegistrations$ | async; as semesterRegistrations) {
+  <mat-form-field>
+    <mat-label>Szemeszter kiválasztása</mat-label>
+    <mat-select [(ngModel)]="selectedSemester" (selectionChange)="updateSubjects()">
+      @for (registration of semesterRegistrations; track registration) {
+        <mat-option [value]="registration">
+          {{ registration.semesterStart }} - {{ registration.semesterEnd }} ({{ registration.periodOfYear }})
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+}
+@if (selectedSemester) {
+  @if (subjects) {
+    <mat-table [dataSource]="subjects">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Tárgy neve</mat-header-cell>
+        <mat-cell *matCellDef="let subject">{{ subject.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="creditIndex">
+        <mat-header-cell *matHeaderCellDef>Kreditérték</mat-header-cell>
+        <mat-cell *matCellDef="let subject">{{ subject.creditIndex }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="grade">
+        <mat-header-cell *matHeaderCellDef>Osztályzat</mat-header-cell>
+        <mat-cell *matCellDef="let subject">{{ subject.grade || 'Még nincs osztályzat!' }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <br>
+    <h2>Átlag: {{ regularAverage || 'Nem számítható átlag!' }}</h2>
+    <h2>Súlyozott átlag: {{ weightedAverage || 'Nem számítható átlag!' }}</h2>
+  } @else {
+    <h2>Ebben a félévben nem voltak tárgyaid!</h2>
+  }
+} @else {
+  <h2>Válassz ki egy szemesztert az átlag megtekintéséhez!</h2>
+}

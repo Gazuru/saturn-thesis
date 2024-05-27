@@ -23,4 +23,9 @@ public class CourseRegistration {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "COURSE_ID", nullable = false)
     private Course course;
+
+    @PreRemove
+    private void onRemove() {
+        course.removeCourseRegistration(this);
+    }
 }

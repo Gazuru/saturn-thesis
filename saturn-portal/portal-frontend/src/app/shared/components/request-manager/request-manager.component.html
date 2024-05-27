@@ -1,0 +1,41 @@
+<p>request-manager works!</p>
+
+<mat-card>
+  <mat-card-title>Kérvényeim</mat-card-title>
+  <mat-card-content>
+    @if (myRequests && myRequests.length > 0) {
+      <mat-table [dataSource]="myRequests">
+
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef>Státusz</mat-header-cell>
+          <mat-cell *matCellDef="let request">{{ request.status | requestStatus }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="requestType">
+          <mat-header-cell *matHeaderCellDef>Típus</mat-header-cell>
+          <mat-cell *matCellDef="let request">{{ request.requestType | requestType }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Leírás</mat-header-cell>
+          <mat-cell *matCellDef="let request">{{ request.description }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="comment">
+          <mat-header-cell *matHeaderCellDef>Megjegyzés</mat-header-cell>
+          <mat-cell *matCellDef="let request" matTooltip="{{request.comment}}">{{ request.comment }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="requester">
+          <mat-header-cell *matHeaderCellDef>Kérvényező</mat-header-cell>
+          <mat-cell *matCellDef="let request">{{ request.requesterName }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns" (click)="handleClick(row)"></mat-row>
+      </mat-table>
+    } @else {
+      <h2>Nincsenek folyamatban lévő kérvények!</h2>
+    }
+  </mat-card-content>
+</mat-card>

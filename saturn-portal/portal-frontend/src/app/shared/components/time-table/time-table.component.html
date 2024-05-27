@@ -1,0 +1,19 @@
+<h2>Órarend</h2>
+@if (myCourses$ | async; as courses) {
+  <mat-table [dataSource]="courses">
+
+    @for (dayOfWeek of displayedColumns; track dayOfWeek) {
+      <ng-container matColumnDef="{{dayOfWeek}}">
+        <mat-header-cell *matHeaderCellDef>{{ dayOfWeek | dayOfWeek }}</mat-header-cell>
+        <mat-cell *matCellDef="let course">
+          @if (course.dayOfWeek == dayOfWeek) {
+            {{ getCourseInformation(course) }}
+          }
+        </mat-cell>
+      </ng-container>
+    }
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+}

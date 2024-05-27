@@ -8,6 +8,9 @@ import hu.bme.aut.saturn.education.persistence.repository.SemesterRepository;
 import hu.bme.aut.saturn.education.service.v1.RegisterForCurrentSemesterRequestDto;
 import hu.bme.aut.saturn.education.service.v1.SemesterDto;
 import hu.bme.aut.saturn.education.service.v1.SemesterRegistrationDto;
+import hu.bme.aut.saturn.education.service.v1.SemesterRegistrationOfStudentDto;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,11 +52,19 @@ public class SemesterService {
         semesterRegistrationRepository.save(registration);
     }
 
-    public SemesterRegistrationDto getCurrentSemesterRegistration(UUID studentUuid) {
+    public SemesterRegistrationDto getCurrentSemesterRegistrationDto(UUID studentUuid) {
         return semesterMapper.toDto(getCurrentSemesterRegistrationForStudent(studentUuid));
     }
 
-    private SemesterRegistration getCurrentSemesterRegistrationForStudent(UUID studentUuid) {
+    public SemesterRegistration getCurrentSemesterRegistrationForStudent(UUID studentUuid) {
         return semesterRegistrationRepository.findBySemesterIdAndStudentUuid(semesterRepository.findCurrentSemester().getId(), studentUuid);
+    }
+
+    public List<SemesterRegistrationOfStudentDto> getSemesterRegistrations(UUID currentStudentUuid) {
+        return semesterMapper.toStudentDtos(semesterRegistrationRepository.findAllByStudentUuid(currentStudentUuid));
+    }
+
+    public Semester getSemester(UUID semesterUuid) {
+        return semesterRepository.findById(semesterUuid).orElseThrow(NoSuchElementException::new);
     }
 }

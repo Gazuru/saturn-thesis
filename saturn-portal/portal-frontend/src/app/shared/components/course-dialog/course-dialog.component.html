@@ -1,0 +1,54 @@
+<div class="form">
+  <h2>
+    Kurzus hozzáadása
+  </h2>
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Kurzus Neve</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Típus</mat-label>
+      <mat-select formControlName="courseType">
+        @for (courseType of courseTypes; track courseType) {
+          <mat-option [value]="courseType">{{ courseType | courseType }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Időpont</mat-label>
+      <input matInput type="time" formControlName="startTime">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Hossz (perc)</mat-label>
+      <input matInput type="number" min="0" formControlName="length">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nap</mat-label>
+      <mat-select formControlName="dayOfWeek">
+        @for (dayOfWeek of daysOfWeek; track dayOfWeek) {
+          <mat-option [value]="dayOfWeek">{{ dayOfWeek | dayOfWeek }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Helyszín</mat-label>
+      <input matInput formControlName="location">
+    </mat-form-field>
+    @if (teachers$ | async; as teachers) {
+      <mat-form-field>
+        <mat-label>Oktatók</mat-label>
+        <mat-select multiple formControlName="courseDeputies">
+          @for (teacher of teachers; track teacher) {
+            <mat-option [value]="teacher.teacherInformation!.id">{{ teacher.firstName }} {{ teacher.lastName }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+    <div class="buttonContainer">
+      <button mat-raised-button (click)="onCancel()">Mégse</button>
+      <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="onSave()">Mentés</button>
+    </div>
+  </form>
+</div>

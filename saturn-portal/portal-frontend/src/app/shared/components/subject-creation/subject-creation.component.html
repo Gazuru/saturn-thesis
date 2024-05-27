@@ -1,0 +1,35 @@
+<h1>Subject Creation Component</h1>
+
+<mat-card>
+  <mat-card-title>
+    <h1>Tárgy létrehozása</h1>
+  </mat-card-title>
+  <form [formGroup]="subjectForm" (ngSubmit)="saveSubject()">
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Tárgy neve</mat-label>
+        <input matInput formControlName="subjectName">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Kreditérték</mat-label>
+        <input matInput type="number" min="1" formControlName="creditAmount">
+      </mat-form-field>
+      <mat-radio-group formControlName="period">
+        <mat-radio-button value="SPRING">Tavaszi</mat-radio-button>
+        <mat-radio-button value="AUTUMN">Őszi</mat-radio-button>
+      </mat-radio-group>
+      @if (teachers$ | async; as teachers) {
+        <mat-form-field>
+          <mat-label>Tárgyfelelősök</mat-label>
+          <mat-select multiple formControlName="subjectDeputies">
+            @for (teacher of teachers; track teacher) {
+              <mat-option [value]="teacher.teacherInformation!.id">{{ teacher.firstName }} {{ teacher.lastName }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      <button mat-raised-button color="primary" type="submit" [disabled]="!subjectForm.valid">Mentés</button>
+    </mat-card-content>
+  </form>
+</mat-card>

@@ -53,6 +53,11 @@
         Pénzügyek
       </button>
     }
+    @if (keycloakService.isManager) {
+      <button mat-button [routerLink]="['/create-subject']">
+        Tárgy létrehozása
+      </button>
+    }
     <button mat-button>
       Placeholder1
     </button>

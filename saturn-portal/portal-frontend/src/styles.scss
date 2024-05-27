@@ -1,4 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+mat-card, mat-card-content, mat-card-title, mat-form-field, button {
+  width: fit-content;
+}
+
+mat-card-content > form, mat-card-content.mat-mdc-card-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100%;
+}
+
+mat-card-content.mat-mdc-card-content:last-child {
+  padding: 0;
+}
+
+mat-card {
+  padding: 1rem;
+  margin-right: 1rem;
+}

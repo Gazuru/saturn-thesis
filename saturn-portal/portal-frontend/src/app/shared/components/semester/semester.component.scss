@@ -1,15 +1,5 @@
-mat-card-content {
-  display: flex;
-  flex-direction: column;
-}
-
-mat-card, mat-card-content, mat-card-title, mat-form-field {
-  width: fit-content;
-}
-
-mat-card {
-  margin: 1rem;
-  padding: 1rem;
+button {
+  align-self: center;
 }
 
 .semesterRegistration {

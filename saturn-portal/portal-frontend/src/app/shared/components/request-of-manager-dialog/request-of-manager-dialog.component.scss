@@ -1,0 +1,21 @@
+.form {
+  margin: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 100%
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+
+  :last-child {
+    margin-left: auto;
+  }
+}

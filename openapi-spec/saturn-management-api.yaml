@@ -24,6 +24,135 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /v1/teachers:
+    get:
+      tags:
+        - User
+      operationId: getTeachers
+      parameters:
+        - name: teacherUuids
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /v1/students:
+    get:
+      tags:
+        - User
+      operationId: getStudents
+      parameters:
+        - name: studentUuids
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /v1/requests:
+    get:
+      tags:
+        - Request
+      operationId: getRequests
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RequestOfStudent'
+    post:
+      tags:
+        - Request
+      operationId: createRequest
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                requestType:
+                  type: string
+                  enum:
+                    - FAIRNESS
+                    - DISMISSAL
+                    - SUBJECT
+                    - OTHER
+                description:
+                  type: string
+                comment:
+                  type: string
+      responses:
+        "200":
+          description: Successful operation
+  /v1/requests/{requestUuid}:
+    put:
+      tags:
+        - Request
+      operationId: updateRequest
+      parameters:
+        - name: requestUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                description:
+                  type: string
+                comment:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - NEW
+                    - IN_PROGRESS
+                    - REQUESTER_FEEDBACK
+                    - IN_REVIEW
+                    - ACCEPTED
+                    - DENIED
+      responses:
+        "200":
+          description: Successful operation
+  /v1/my-requests:
+    get:
+      tags:
+        - Request
+      operationId: getMyRequests
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RequestOfManager'
+
 components:
   schemas:
     User:
@@ -74,11 +203,7 @@ components:
         id:
           type: string
           format: uuid
-        requests:
-          type: array
-          items:
-            $ref: '#/components/schemas/Request'
-    Request:
+    RequestOfStudent:
       properties:
         requestType:
           type: string
@@ -96,15 +221,38 @@ components:
             - IN_REVIEW
             - ACCEPTED
             - DENIED
-        requesterUuid:
-          type: string
-          format: uuid
         assignee:
           type: string
-          format: uuid
         description:
           type: string
         comment:
+          type: string
+    RequestOfManager:
+      properties:
+        id:
+          type: string
+          format: uuid
+        requestType:
+          type: string
+          enum:
+            - FAIRNESS
+            - DISMISSAL
+            - SUBJECT
+            - OTHER
+        status:
+          type: string
+          enum:
+            - NEW
+            - IN_PROGRESS
+            - REQUESTER_FEEDBACK
+            - IN_REVIEW
+            - ACCEPTED
+            - DENIED
+        description:
+          type: string
+        comment:
+          type: string
+        requesterName:
           type: string
     Document:
       properties:

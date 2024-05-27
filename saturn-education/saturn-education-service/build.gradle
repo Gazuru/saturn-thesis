@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     api project(':saturn-education:saturn-education-api')
+    api project(':saturn-education:saturn-education-management-client')
     implementation project(':saturn-education:saturn-education-persistence')
 
     implementation 'org.springframework.boot:spring-boot-starter'

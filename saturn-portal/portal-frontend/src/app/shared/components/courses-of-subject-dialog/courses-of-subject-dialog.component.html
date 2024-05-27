@@ -1,0 +1,64 @@
+<div>
+  <h2>'{{ data.subject.name }}' tárgy kurzusai</h2>
+  @if (courses$ | async; as courses) {
+    @if (courses.length > 0) {
+      <mat-table [dataSource]="courses">
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Név</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="courseType">
+          <mat-header-cell *matHeaderCellDef>Típus</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.courseType | courseType }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="startTime">
+          <mat-header-cell *matHeaderCellDef>Időpont</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.startTime }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="length">
+          <mat-header-cell *matHeaderCellDef>Hossz</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.length }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dayOfWeek">
+          <mat-header-cell *matHeaderCellDef>Nap</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.dayOfWeek | dayOfWeek }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <mat-header-cell *matHeaderCellDef>Hely</mat-header-cell>
+          <mat-cell *matCellDef="let course">{{ course.location }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="courseTeachers">
+          <mat-header-cell *matHeaderCellDef>
+            Oktatók
+          </mat-header-cell>
+          <mat-cell *matCellDef="let course"
+                    matTooltip="{{ course.courseTeachers.join(', ') }}">{{ course.courseTeachers.join(", ") }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="signUp">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let course">
+            <button mat-icon-button (click)="handleButtonClick(course)">
+              <mat-icon>{{ getButtonIcon(course) }}</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    } @else {
+      <h2>Nincsenek még kurzusok ehhez a tárgyhoz!</h2>
+    }
+  } @else {
+    <mat-spinner></mat-spinner>
+  }
+</div>

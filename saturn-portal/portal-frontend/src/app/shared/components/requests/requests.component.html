@@ -1,0 +1,8 @@
+<div>
+  @if (keycloakService.isStudent) {
+    <app-request-student></app-request-student>
+  }
+  @if (keycloakService.isManager) {
+    <app-request-manager></app-request-manager>
+  }
+</div>

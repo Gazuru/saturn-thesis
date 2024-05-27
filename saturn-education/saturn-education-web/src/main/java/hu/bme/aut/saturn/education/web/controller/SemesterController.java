@@ -4,7 +4,9 @@ import hu.bme.aut.saturn.education.service.SemesterService;
 import hu.bme.aut.saturn.education.service.v1.RegisterForCurrentSemesterRequestDto;
 import hu.bme.aut.saturn.education.service.v1.SemesterDto;
 import hu.bme.aut.saturn.education.service.v1.SemesterRegistrationDto;
+import hu.bme.aut.saturn.education.service.v1.SemesterRegistrationOfStudentDto;
 import hu.bme.aut.saturn.education.web.v1.SemesterApi;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,12 @@ public class SemesterController implements SemesterApi {
 
     @Override
     public ResponseEntity<SemesterRegistrationDto> getCurrentSemesterRegistration() {
-        return ResponseEntity.ofNullable(semesterService.getCurrentSemesterRegistration(userApiHelper.getCurrentStudentUuid()));
+        return ResponseEntity.ofNullable(semesterService.getCurrentSemesterRegistrationDto(userApiHelper.getCurrentStudentUuid()));
+    }
+
+    @Override
+    public ResponseEntity<List<SemesterRegistrationOfStudentDto>> getSemesterRegistrations() {
+        return ResponseEntity.ok(semesterService.getSemesterRegistrations(userApiHelper.getCurrentStudentUuid()));
     }
 
     @Override

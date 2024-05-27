@@ -1,0 +1,57 @@
+<h2>Tárgyfelvétel</h2>
+
+@if (currentSemesterRegistration$ | async; as registration) {
+  @if (registration.status === 'ACTIVE') {
+    @if (subjects$ | async; as subjects) {
+      @if (subjects.length > 0) {
+
+        <mat-table [dataSource]="subjects">
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Név</mat-header-cell>
+            <mat-cell *matCellDef="let subject">{{ subject.name }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="creditIndex">
+            <mat-header-cell *matHeaderCellDef>Kredit</mat-header-cell>
+            <mat-cell *matCellDef="let subject">{{ subject.creditIndex }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="subjectDeputies">
+            <mat-header-cell *matHeaderCellDef>
+              Tárgyfelelősök
+            </mat-header-cell>
+            <mat-cell *matCellDef="let subject"
+                      matTooltip="{{ subject.subjectDeputies.join(', ') }}">{{ subject.subjectDeputies.join(", ") }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="signUp">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let subject">
+              <button mat-icon-button (click)="handleButtonClick($event, subject)">
+                <mat-icon>{{ getButtonIcon(subject) }}</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns" (click)="handleRowClick(row)"
+                   [class]="getClass(row)"></mat-row>
+        </mat-table>
+
+      } @else {
+        <h2>Nincs elérhető tárgy a félévben!</h2>
+      }
+    } @else {
+      <mat-spinner></mat-spinner>
+    }
+  } @else {
+    <h2>Nem regisztráltál a jelenlegi félévre!</h2>
+  }
+} @else if (!currentSemesterRegistration$) {
+  <mat-spinner></mat-spinner>
+} @else {
+  <h2>Nem regisztráltál a jelenlegi félévre!</h2>
+}

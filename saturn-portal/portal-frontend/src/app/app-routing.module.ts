@@ -19,6 +19,7 @@ import {GradingComponent} from "./shared/components/grading/grading.component";
 import {RequestsComponent} from "./shared/components/requests/requests.component";
 import {InviteComponent} from "./shared/components/invite/invite.component";
 import {MonetaryComponent} from "./shared/components/monetary/monetary.component";
+import {SubjectCreationComponent} from "./shared/components/subject-creation/subject-creation.component";
 
 const isLoggedInGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   return inject(KeycloakService).isAuthenticated ? true : inject(Router).createUrlTree(['/']);
@@ -90,7 +91,13 @@ const routes: Routes = [{
     path: 'monetary',
     component: MonetaryComponent,
     canActivate: [isLoggedInGuard, isStudentGuard || isManagerGuard]
-  },];
+  },
+  {
+    path: 'create-subject',
+    component: SubjectCreationComponent,
+    canActivate: [isLoggedInGuard, isManagerGuard]
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
