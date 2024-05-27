@@ -1,1 +1,43 @@
-<p>exam-registration works!</p>
+<h2>Vizsgajelentkezés</h2>
+
+
+@if (exams$ | async; as exams) {
+  @if (exams.length > 0) {
+    <mat-table [dataSource]="exams">
+
+      <ng-container matColumnDef="examDate">
+        <mat-header-cell *matHeaderCellDef>Dátum</mat-header-cell>
+        <mat-cell *matCellDef="let exam">{{ exam.examDate }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="startTime">
+        <mat-header-cell *matHeaderCellDef>Időpont</mat-header-cell>
+        <mat-cell *matCellDef="let exam">{{ exam.startTime }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef>Hely</mat-header-cell>
+        <mat-cell *matCellDef="let exam">{{ exam.location }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="signUp">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let exam">
+          <button mat-icon-button (click)="handleButtonClick(exam)">
+            <mat-icon>{{ getButtonIcon(exam) }}</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  } @else {
+    <h2>Nincsenek még kurzusok ehhez a tárgyhoz!</h2>
+  }
+} @else {
+  <mat-spinner></mat-spinner>
+}
+
+
+

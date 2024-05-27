@@ -230,6 +230,53 @@ paths:
       responses:
         "200":
           description: Successful operation
+  /v1/subjects/{subjectUuid}/exams:
+    get:
+      tags:
+        - Exam
+      operationId: getExamsOfSubject
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exam'
+    post:
+      tags:
+        - Exam
+      operationId: createExamForSubject
+      parameters:
+        - name: subjectUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                examDate:
+                  type: string
+                  format: date
+                startTime:
+                  type: string
+                location:
+                  type: string
+      responses:
+        "200":
+          description: Successful operation
   /v1/subject/{subjectUuid}/students:
     get:
       tags:
@@ -362,6 +409,49 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CourseRegistration'
+  /v1/exams:
+    get:
+      tags:
+        - Exam
+      operationId: getAllExams
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exam'
+  /v1/exams/registrations:
+    get:
+      tags:
+        - Exam
+      operationId: getAllExamRegistrations
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExamRegistration'
+  /v1/exams/{examUuid}/register:
+    post:
+      tags:
+        - Exam
+      operationId: registerForExam
+      parameters:
+        - name: examUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Successful operation
 components:
   schemas:
     Course:
@@ -404,6 +494,29 @@ components:
           type: string
           format: uuid
         courseUuid:
+          type: string
+          format: uuid
+    ExamRegistration:
+      properties:
+        examUuid:
+          type: string
+          format: uuid
+        studentUuid:
+          type: string
+          format: uuid
+    Exam:
+      properties:
+        id:
+          type: string
+          format: uuid
+        examDate:
+          type: string
+          format: date
+        startTime:
+          type: string
+        location:
+          type: string
+        subjectUuid:
           type: string
           format: uuid
     Semester:

@@ -22,6 +22,9 @@ public class Subject extends BaseEntity {
     @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
     private List<Course> courses;
 
+    @OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
+    private List<Exam> exams;
+
     @NotNull
     private Long creditIndex;
 
@@ -52,6 +55,15 @@ public class Subject extends BaseEntity {
         }
         if (!courses.contains(course)) {
             courses.add(course);
+        }
+    }
+
+    public void addExam(Exam exam) {
+        if (exams == null) {
+            exams = new ArrayList<>();
+        }
+        if (!exams.contains(exam)) {
+            exams.add(exam);
         }
     }
 

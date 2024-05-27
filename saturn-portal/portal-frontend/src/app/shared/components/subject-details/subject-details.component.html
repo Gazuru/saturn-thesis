@@ -81,7 +81,7 @@
         <mat-spinner></mat-spinner>
       }
 
-      <button mat-raised-button color="primary" (click)="openDialog()">Kurzus hozzáadása</button>
+      <button mat-raised-button color="primary" (click)="openCourseDialog()">Kurzus hozzáadása</button>
     </mat-card-content>
   </mat-card>
 
@@ -122,6 +122,38 @@
         <h2>Nem jelentkezett még hallgató erre a tárgyra!</h2>
       }
 
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Vizsgák</mat-card-title>
+    <mat-card-content>
+      @if (exams && exams.length > 0) {
+        <mat-table [dataSource]="exams">
+
+          <ng-container matColumnDef="examDate">
+            <mat-header-cell *matHeaderCellDef>Dátum</mat-header-cell>
+            <mat-cell *matCellDef="let exam">{{ exam.examDate }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="startTime">
+            <mat-header-cell *matHeaderCellDef>Időpont</mat-header-cell>
+            <mat-cell *matCellDef="let exam">{{ exam.startTime }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="location">
+            <mat-header-cell *matHeaderCellDef>Helyszín</mat-header-cell>
+            <mat-cell *matCellDef="let exam">{{ exam.location }}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="examDisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: examDisplayedColumns"></mat-row>
+        </mat-table>
+      } @else {
+        <h2>Nincsenek még kurzusok ehhez a tárgyhoz!</h2>
+      }
+
+      <button mat-raised-button color="primary" (click)="openExamDialog()">Vizsga hozzáadása</button>
     </mat-card-content>
   </mat-card>
 </div>

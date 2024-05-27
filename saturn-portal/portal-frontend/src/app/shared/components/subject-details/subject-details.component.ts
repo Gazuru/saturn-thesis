@@ -1,5 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Course, CourseService, SubjectOfTeacher, SubjectService} from "../../../../modules/generated";
+import {
+  Course,
+  CourseService,
+  Exam,
+  ExamService,
+  SubjectOfTeacher,
+  SubjectService
+} from "../../../../modules/generated";
 import {MatCard, MatCardContent, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -31,6 +38,7 @@ import {MatTooltip} from "@angular/material/tooltip";
 import {User} from "../../../../modules/generated/model/user";
 import {UserService} from "../../../../modules/generated/api/user.service";
 import {MatIcon} from "@angular/material/icon";
+import {ExamDialogComponent} from "../exam-dialog/exam-dialog.component";
 
 @Component({
   selector: 'app-subject-details',
@@ -88,24 +96,29 @@ export class SubjectDetailsComponent implements OnInit {
   subjectForm!: FormGroup;
 
   courses$?: Observable<Course[]>;
-
   students$?: Observable<User[]>;
+  exams$?: Observable<Exam[]>;
 
   students?: User[];
+  exams?: Exam[];
 
   displayedColumns: string[] = ['name', 'courseType', 'startTime', 'length', 'dayOfWeek', 'location', 'courseTeachers'];
 
   studentDisplayedColumns: string[] = ['firstName', 'lastName', 'saturnCode', 'remove']
 
+  examDisplayedColumns: string[] = ['examDate', 'startTime', 'location'];
+
   constructor(protected readonly subjectService: SubjectService,
               protected readonly courseService: CourseService,
               protected readonly userService: UserService,
+              protected readonly examService: ExamService,
               private snackBar: MatSnackBar,
               private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.courses$ = this.courseService.getCoursesOfSubject(this.subject.id!);
+    this.exams$ = this.examService.getExamsOfSubject(this.subject.id!);
     this.students$ = this.subjectService.getRegisteredStudents(this.subject.id!).pipe(
       switchMap((uuids: string[]) => this.userService.getStudents(uuids))
     );
@@ -115,10 +128,15 @@ export class SubjectDetailsComponent implements OnInit {
       period: new FormControl(this.subject.registerablePeriodOfYear, Validators.required),
     })
     this.getStudentsOfSubject();
+    this.getExamsOfSubject();
   }
 
   getStudentsOfSubject() {
     this.students$?.subscribe(users => this.students = users);
+  }
+
+  getExamsOfSubject() {
+    this.exams$?.subscribe(exams => this.exams = exams);
   }
 
   saveSubject() {
@@ -135,12 +153,11 @@ export class SubjectDetailsComponent implements OnInit {
     })
   }
 
-  openDialog() {
+  openCourseDialog() {
     const dialogRef = this.dialog.open(CourseDialogComponent, {data: {}, width: '33%'})
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log("Got result ", result);
         this.courseService.createCourseForSubject(this.subject.id as string,
           {
             courseName: result.name,
@@ -151,6 +168,23 @@ export class SubjectDetailsComponent implements OnInit {
             location: result.location || '',
             courseDeputies: result.courseDeputies,
           }).subscribe(() => this.snackBar.open("Kurzus sikeresen létrehozva!"));
+      }
+    })
+  }
+
+  openExamDialog() {
+    const dialogRef = this.dialog.open(ExamDialogComponent, {data: {}, width: '33%'});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.examService.createExamForSubject(this.subject.id as string, {
+          examDate: result.examDate,
+          startTime: result.startTime,
+          location: result.location,
+        }).subscribe(() => {
+          this.snackBar.open("Vizsga sikeresen létrehozva!");
+          this.getExamsOfSubject();
+        })
       }
     })
   }

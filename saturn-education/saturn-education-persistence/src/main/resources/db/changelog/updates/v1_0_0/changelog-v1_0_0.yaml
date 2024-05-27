@@ -35,3 +35,15 @@ databaseChangeLog:
         - sqlFile:
             path: update_T_EDU_SUBJECTS_rollback.sql
             relativeToChangelogFile: true
+  - changeSet:
+      id: 'v1_0_0_4'
+      author: JM9H5H
+      dbms: 'mssql'
+      changes:
+        - sqlFile:
+            path: create_exam_tables.sql
+            relativeToChangelogFile: true
+      rollback:
+        - sqlFile:
+            path: create_exam_tables_rollback.sql
+            relativeToChangelogFile: true
