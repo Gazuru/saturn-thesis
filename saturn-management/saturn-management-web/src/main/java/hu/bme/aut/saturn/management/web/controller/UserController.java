@@ -1,6 +1,7 @@
 package hu.bme.aut.saturn.management.web.controller;
 
 import hu.bme.aut.saturn.management.service.UserService;
+import hu.bme.aut.saturn.management.service.v1.CreateUserRequestDto;
 import hu.bme.aut.saturn.management.service.v1.UserDto;
 import hu.bme.aut.saturn.management.web.v1.UserApi;
 import java.util.List;
@@ -16,6 +17,12 @@ import org.springframework.stereotype.Controller;
 public class UserController implements UserApi {
 
     private final UserService userService;
+
+    @Override
+    public ResponseEntity<Void> createUser(CreateUserRequestDto createUserRequestDto) {
+        userService.createUser(createUserRequestDto);
+        return ResponseEntity.ok().build();
+    }
 
     @Override
     public ResponseEntity<List<UserDto>> getStudents(List<UUID> studentUuids) {

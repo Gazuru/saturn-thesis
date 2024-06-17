@@ -4,10 +4,7 @@ import hu.bme.aut.saturn.management.persistence.entity.Manager;
 import hu.bme.aut.saturn.management.persistence.entity.Student;
 import hu.bme.aut.saturn.management.persistence.entity.Teacher;
 import hu.bme.aut.saturn.management.persistence.entity.User;
-import hu.bme.aut.saturn.management.service.v1.ManagerDto;
-import hu.bme.aut.saturn.management.service.v1.StudentDto;
-import hu.bme.aut.saturn.management.service.v1.TeacherDto;
-import hu.bme.aut.saturn.management.service.v1.UserDto;
+import hu.bme.aut.saturn.management.service.v1.*;
 import java.util.Collection;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -24,4 +21,6 @@ public interface UserMapper {
     ManagerDto toDto(Manager manager);
 
     TeacherDto toDto(Teacher teacher);
+
+    User toEntity(CreateUserRequestDto requestDto);
 }

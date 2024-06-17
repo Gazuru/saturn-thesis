@@ -24,6 +24,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+    post:
+      tags:
+        - User
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                saturnCode:
+                  type: string
+                dateOfBirth:
+                  type: string
+                  format: date
+                locationOfBirth:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - student
+                      - manager
+                      - teacher
+      responses:
+        "200":
+          description: Successful operation
   /v1/teachers:
     get:
       tags:
@@ -152,7 +183,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RequestOfManager'
-
 components:
   schemas:
     User:

@@ -1,0 +1,16 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > mat-card-content {
+  > mat-form-field {
+    width: auto
+  }
+
+  width: auto;
+}
+
+mat-card, mat-card-content, mat-card-title, mat-form-field, button {
+  width: fit-content;
+}

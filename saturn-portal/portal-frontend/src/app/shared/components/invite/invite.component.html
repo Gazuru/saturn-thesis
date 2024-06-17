@@ -1,1 +1,52 @@
-<p>invite works!</p>
+<mat-card>
+  <mat-card-title>
+    <h1>Felhasználó meghívása</h1>
+  </mat-card-title>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <mat-card-content>
+
+      <mat-form-field>
+        <mat-label>Keresztnév</mat-label>
+        <input matInput formControlName="firstName">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Vezetéknév</mat-label>
+        <input matInput formControlName="lastName">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Saturn kód</mat-label>
+        <input matInput formControlName="saturnCode">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>E-mail cím</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Születési idő</mat-label>
+        <input matInput [matDatepicker]="birthDate" formControlName="dateOfBirth"/>
+        <mat-datepicker-toggle matSuffix [for]="birthDate"></mat-datepicker-toggle>
+        <mat-datepicker #birthDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Születési hely</mat-label>
+        <input matInput formControlName="locationOfBirth">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Jogosultságok</mat-label>
+        <mat-select multiple formControlName="roles">
+          @for (role of roleList; track role) {
+            <mat-option [value]="role">{{ role }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Mentés</button>
+    </mat-card-content>
+  </form>
+</mat-card>
